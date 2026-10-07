@@ -1,0 +1,1 @@
+Official Frontend Mentor visual references and images, retrieved 2026-10-07 from https://github.com/frontendmentorio/interactive-rating-component. Application code is independently authored. Family adaptations are 16px body text, native keyboard radios, visible focus, a reset action and an honest local-demo notice.
