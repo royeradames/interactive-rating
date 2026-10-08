@@ -27,7 +27,8 @@ main {
 
 .rating-card {
   width: min(100%, 25.75rem);
-  padding: 2rem;
+  /* Figma card: content starts 35 px down and 31 px in, and ends 34 px above the bottom. */
+  padding: 2.1875rem 1.9375rem 2.125rem;
   border-radius: 1.875rem;
   background: radial-gradient(98% 100% at 50% 0%, var(--panel-top) 0%, var(--panel-bottom) 100%);
 }

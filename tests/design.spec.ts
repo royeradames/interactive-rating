@@ -47,7 +47,8 @@ test("desktop rating frame matches the Figma card, type and spacing", async ({ p
   expect(Math.abs(box.x + box.width / 2 - 720)).toBeLessThanOrEqual(1);
   expect(Math.abs(box.y + box.height / 2 - 400)).toBeLessThanOrEqual(14);
   await expect(card).toHaveCSS("border-radius", "30px");
-  await expect(card).toHaveCSS("padding-left", "32px");
+  await expect(card).toHaveCSS("padding-left", "31px");
+  await expect(card).toHaveCSS("padding-top", "35px");
   const heading = page.getByRole("heading", { level: 1 });
   await expect(heading).toHaveCSS("font-size", "28px");
   await expect(heading).toHaveCSS("line-height", "35px");
