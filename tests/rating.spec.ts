@@ -1,14 +1,31 @@
 import { expect, test } from "@playwright/test";
 
-test("validates, supports native arrow selection and restores focus after reset", async ({ page }) => {
+test("validates and clears errors, supports native arrow selection and restores focus after reset", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", error => errors.push(error.message));
   await page.goto("/");
+  const error = page.locator("#rating-error");
+  await expect(error).toHaveCount(1);
+  await expect(error).toHaveAttribute("role", "alert");
+  await expect(error).toBeEmpty();
   await page.getByRole("button", { name: "Submit", exact: true }).click();
-  await expect(page.getByRole("alert").filter({ hasText: "Choose a rating from 1 to 5" })).toHaveText("Choose a rating from 1 to 5 before submitting.");
+  await expect(error).toHaveText("Choose a rating from 1 to 5 before submitting.");
+  await expect(error).toBeVisible();
   const first = page.getByRole("radio", { name: "1 out of 5", exact: true });
   await expect(first).toBeFocused();
+  const radios = page.getByRole("radio");
+  await expect(radios).toHaveCount(5);
+  for (const radio of await radios.all()) {
+    await expect(radio).toHaveAttribute("aria-describedby", "rating-error");
+  }
   await first.press("Space");
+  await expect(first).toBeChecked();
+  await expect(first).toBeFocused();
+  await expect(error).toBeEmpty();
+  await expect(page.getByText("Choose a rating from 1 to 5 before submitting.", { exact: true })).toHaveCount(0);
+  for (const radio of await radios.all()) {
+    await expect(radio).not.toHaveAttribute("aria-describedby");
+  }
   await first.press("ArrowRight");
   await expect(page.getByRole("radio", { name: "2 out of 5", exact: true })).toBeChecked();
   await page.getByRole("button", { name: "Submit", exact: true }).click();
