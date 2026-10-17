@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element -- next/image added client JavaScript here without optimizing anything (SVGs, data URLs or unoptimized files). */
 import { useEffect, useRef, useState } from "react";
 const ratings = [1, 2, 3, 4, 5] as const;
 type Rating = (typeof ratings)[number];
@@ -19,7 +19,7 @@ export function RatingCard() {
   if (state.kind === "submitted") {
     return (
       <section className="rating-card thank-you" aria-labelledby="rating-title">
-        <Image src="/images/illustration-thank-you.svg" width={162} height={108} alt="" unoptimized />
+        <img src="/images/illustration-thank-you.svg" width={162} height={108} alt="" loading="lazy" decoding="async" />
         <p className="selection-receipt">You selected {state.rating} out of 5</p>
         <h1 id="rating-title" ref={headingRef} tabIndex={-1}>Thank you!</h1>
         <p>We appreciate you taking the time to give a rating. If you ever need more support, don’t hesitate to get in touch!</p>
@@ -35,7 +35,7 @@ export function RatingCard() {
   const selected = state.kind === "choosing" ? state.rating : null;
   return (
     <section className="rating-card" aria-labelledby="rating-title">
-      <div className="star-well" aria-hidden="true"><Image src="/images/icon-star.svg" width={17} height={16} alt="" unoptimized /></div>
+      <div className="star-well" aria-hidden="true"><img src="/images/icon-star.svg" width={17} height={16} alt="" loading="lazy" decoding="async" /></div>
       <h1 id="rating-title">How did we do?</h1>
       <p>Please let us know how we did with your support request. All feedback is appreciated to help us improve our offering!</p>
       <div>
