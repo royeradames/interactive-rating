@@ -40,18 +40,19 @@ export function RatingCard() {
       <p>Please let us know how we did with your support request. All feedback is appreciated to help us improve our offering!</p>
       <div>
         <noscript><p className="form-error">Enable JavaScript to try this local rating demo. No rating is sent.</p></noscript>
-        <fieldset aria-describedby={invalid ? "rating-error" : undefined} aria-invalid={invalid}>
+        {/* The alert region is always mounted, so its message is announced when it appears. */}
+        <fieldset>
           <legend className="sr-only">Choose a rating out of five</legend>
           <div className="rating-options">
             {ratings.map((rating) => (
               <label className="rating-option" key={rating}>
-                <input ref={rating === 1 ? firstRatingRef : undefined} type="radio" name="rating" value={rating} checked={selected === rating} onChange={() => setState({ kind: "choosing", rating })} />
+                <input ref={rating === 1 ? firstRatingRef : undefined} type="radio" name="rating" value={rating} checked={selected === rating} aria-describedby={invalid ? "rating-error" : undefined} onChange={() => setState({ kind: "choosing", rating })} />
                 <span aria-hidden="true">{rating}</span><span className="sr-only">{rating} out of 5</span>
               </label>
             ))}
           </div>
         </fieldset>
-        {invalid && <p id="rating-error" className="form-error" role="alert">Choose a rating from 1 to 5 before submitting.</p>}
+        <p id="rating-error" className={invalid ? "form-error" : undefined} role="alert">{invalid ? "Choose a rating from 1 to 5 before submitting." : ""}</p>
         <button className="submit-button" type="button" onClick={() => {
           if (selected === null) {
             setState({ kind: "invalid" });
